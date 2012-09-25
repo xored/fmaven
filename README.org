@@ -1,2 +1,0 @@
-* fmaven
-  Fantom Maven Plugin
