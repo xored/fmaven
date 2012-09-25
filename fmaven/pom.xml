@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.xored</groupId>
+  <artifactId>fmaven-plugin</artifactId>
+  <packaging>maven-plugin</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Fantom Maven Plugin</name>
+  
+  <developers>
+        <developer>
+            <id>zapletnev</id>
+            <name>Igor Zapletnev</name>
+            <email>igor.zapletnev@gmail.com</email>
+        </developer>
+        <developer>
+            <id>shatilina</id>
+            <name>Julia Shatilina</name>
+            <email>julia.shatilina@xored.com</email>
+        </developer>
+    </developers>
+  
+	<properties>
+    	<maven.version>3.0</maven.version>
+    	<maven.compiler.source>1.5</maven.compiler.source>
+    	<maven.compiler.target>1.5</maven.compiler.target>
+    	<encoding>UTF-8</encoding>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+  
+   <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+            </plugin>
+        </plugins>
+    </build>  
+    
+    
+	<dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>${maven.version}</version>
+        </dependency>
+        <dependency>
+      		<groupId>org.apache.maven</groupId>
+      		<artifactId>maven-core</artifactId>
+      		<version>${maven.version}</version>
+    	</dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+    	<dependency>
+      		<groupId>org.apache.commons</groupId>
+      		<artifactId>commons-exec</artifactId>
+      		<version>1.0.1</version>
+    	</dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>10.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.2.1</version>
+        </dependency>
+    </dependencies>
+    
+</project>
