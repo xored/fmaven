@@ -34,9 +34,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
             </plugin>
-        </plugins>
+         </plugins>
     </build>  
-    
     
 	<dependencies>
         <dependency>
@@ -68,6 +67,13 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.2.1</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.xored</groupId>
+        	<artifactId>fmavenfan</artifactId>
+        	<version>1.0</version>
+        	<scope>system</scope>
+        	<systemPath>${project.basedir}/lib/fmaven.jar</systemPath>
         </dependency>
     </dependencies>
     
