@@ -47,7 +47,7 @@ public abstract class FatomMojo extends AbstractMojo {
 	/**
 	 * Default location of .coffee source files.
 	 * 
-	 * @parameter expression="${basedir}/src/main/fan"
+	 * @parameter expression="${basedir}/src/main/fan/"
 	 * @required
 	 */
 	protected File fanDir;
@@ -56,7 +56,7 @@ public abstract class FatomMojo extends AbstractMojo {
 	 * Location of the output files from the Coffee Compiler. Defaults to
 	 * ${build.directory}/fan
 	 * 
-	 * @parameter expression="${project.build.directory}/fan"
+	 * @parameter expression="${project.build.directory}/fan/"
 	 * @required
 	 */
 	protected File fanOutputDir;

@@ -7,8 +7,8 @@ class FanPod
   Version podVersion := Version("1.0")
   Str:Obj podIndex := [:]
   Str podSummary := ""
-  Uri[] podSrc := [`fan/`]
   Uri[] javaDirs := [,]
+  Uri[] podSrc := [Uri("fan/")]
   
   const Str:Str meta := [:]
   
@@ -37,7 +37,7 @@ class FanPod
   
   FanPod src(Str[] srcs)
   {
-    podSrc = srcs.map |Str src->Uri| { return Uri.fromStr(src) }
+    podSrc = srcs.map |Str src->Uri| { Uri(src) }
     return this
   }
   

@@ -6,7 +6,7 @@ class Build : build::BuildPod
   {
     podName = "fmaven"
     summary = "fmaven"
-    depends = ["sys 1.0", "compiler 1.0"]
+    depends = ["sys 1.0", "fcompiler 1.0"]
     srcDirs = [`fan/`, `fan/compiler/`]
   }
 }

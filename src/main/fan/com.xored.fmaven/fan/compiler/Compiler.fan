@@ -1,4 +1,4 @@
-using compiler
+using fcompiler
 
 class Compiler
 {
@@ -33,17 +33,14 @@ class Compiler
     input.mode        = CompilerInputMode.file
     input.baseDir     = manifest.baseDir
     input.srcFiles    = manifest.podSrc
-//    input.resFiles    = manifest.resDirs
     input.index       = manifest.podIndex
     input.outDir      = File.os(outputDir.pathStr) 
     input.output      = CompilerOutputMode.podFile
-//    input.jsFiles     = manifest.jsDirs
     meta := manifest.meta.dup 
     meta["pod.docApi"] = true.toStr
     meta["pod.docSrc"] = false.toStr
     meta["pod.native.java"]   = (!manifest.javaDirs.isEmpty).toStr
     meta["pod.native.dotnet"] = false.toStr
-//    meta["pod.native.js"]     = (!manifest.jsDirs.isEmpty).toStr
     input.meta = meta
     errs := compile(input)
     if (!errs[0].isEmpty) return errs.flatten
@@ -58,7 +55,7 @@ class Compiler
   private CompilerErr[][] compile(CompilerInput input)
   {
     caughtErrs := CompilerErr[,]
-    compiler := compiler::Compiler(input)
+    compiler := fcompiler::Compiler(input)
     
     try compiler.compile  
     catch(CompilerErr e) { echo(e); caughtErrs.add(e) } 

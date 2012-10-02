@@ -7,7 +7,7 @@ class Build : BuildScript
   {
     dist := JarDist(this)
     dist.outFile = `./fmaven.jar`.toFile.normalize
-    dist.podNames = Str["fmaven", "compiler"]
+    dist.podNames = Str["fmaven", "fcompiler"]
     dist.mainMethod = "fmaven::Main.main"
     dist.run
   }

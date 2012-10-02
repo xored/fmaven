@@ -49,8 +49,10 @@ public class FantomCompileMojo extends FatomMojo {
 				String.format("Compiling source %s to %s", podName,
 						fanOutputDir.getAbsolutePath()));
 
+		// TODO: use normal path
 		final FanPod fanPod = FanPod
-				.make(podName, "file:/" + buildFan.getPath())
+				.make(podName,
+						"file:/" + buildFan.getPath().replaceAll("\\\\", "/"))
 				.version(podVersion).summary(podSummary);
 
 		long start = System.currentTimeMillis();

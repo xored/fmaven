@@ -33,8 +33,10 @@ public class FantomCompiler {
 			fanOutputDir.mkdirs();
 		}
 
-		Compiler compiler = new Compiler().make("file:/"
-				+ fanOutputDir.getPath());
+		// TODO: use normal path
+		String path = "file:/" + fanOutputDir.getPath().replaceAll("\\\\", "/");
+		Compiler compiler = new Compiler().make(path.endsWith("/") ? path
+				: path + "/");
 		List errors = compiler.compileManifest(pod);
 
 		if (errors.isEmpty()) {
