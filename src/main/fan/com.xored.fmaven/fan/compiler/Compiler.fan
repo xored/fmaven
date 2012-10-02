@@ -6,11 +6,13 @@ class Compiler
  
   File outputDir { private set }
   
-  new make(Str outDir) 
+  new make(Uri outDir) 
   { 
-    outputDir = File(Uri.fromStr(outDir))
+    outputDir = File(outDir)
     if (!outputDir.exists) { outputDir.create }
   }
+  
+  static new makeFromStr(Str outDirStr) { make(Uri.fromStr(outDirStr)) }
   
   CompilerErr[] compileManifests() 
   {

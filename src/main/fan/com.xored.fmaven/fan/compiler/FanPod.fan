@@ -12,9 +12,9 @@ class FanPod
   
   const Str:Str meta := [:]
   
-  new make(Str name, Str buildFanPath) {
+  new make(Str name, Uri podDirPath) {
     podName = name
-    podDir = File(Uri.fromStr(buildFanPath))
+    podDir = File(podDirPath)
   }
   
   FanPod version(Str version) 
@@ -42,4 +42,6 @@ class FanPod
   }
   
   File baseDir() { podDir }
+  
+  static new makeFromStr(Str name, Str podDirPathStr) { make(name, Uri.fromStr(podDirPathStr)) }
 }
