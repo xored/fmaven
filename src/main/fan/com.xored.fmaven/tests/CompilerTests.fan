@@ -4,7 +4,7 @@
 class CompilerTests : Test
 {
   
-  Void test()
+  Void testHelloWorld()
   {
     verifyNotNull(compile(unzip(`/resources/tests/hello.zip`)))
   }

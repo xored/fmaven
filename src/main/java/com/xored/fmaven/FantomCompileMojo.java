@@ -3,12 +3,15 @@ package com.xored.fmaven;
 import java.io.File;
 import java.util.List;
 
-import com.xored.fmaven.FantomCompiler.CompileStatus;
+import com.xored.fmaven.compiler.FantomCompiler;
+import com.xored.fmaven.compiler.FantomCompiler.CompileStatus;
 
 import fan.fmaven.FanPod;
 
 /**
- * @goal compile
+ * @goal execute
+ * @phase compile
+ * @threadSafe
  */
 public class FantomCompileMojo extends FatomMojo {
 
@@ -63,6 +66,15 @@ public class FantomCompileMojo extends FatomMojo {
 			getLog().info(
 					"Compilation successfully completed in "
 							+ String.format("[%.2fs]", duration / 1000.0));
+			File pod = new File(fanOutputDir, String.format("%s.%s",
+					fanPod.podName, POD_EXT));
+			if (pod.exists()) {
+				pod.renameTo(new File(fanOutputDir, String.format("%s-%s.pod",
+						project.getArtifactId(), project.getVersion())));
+				pod.delete();
+			} else {
+				getLog().error("Could not find compiled pod " + pod.getPath());
+			}
 		} else {
 			getLog().info(
 					String.format("Compilation finished in "

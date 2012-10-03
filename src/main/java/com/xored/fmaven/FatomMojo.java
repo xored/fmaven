@@ -19,6 +19,8 @@ import com.google.common.collect.Lists;
 
 public abstract class FatomMojo extends AbstractMojo {
 
+	protected static final String POD_EXT = "pod";
+
 	/**
 	 * @parameter expression="${project}"
 	 * @required
@@ -45,7 +47,7 @@ public abstract class FatomMojo extends AbstractMojo {
 	protected ToolchainManager toolchainManager;
 
 	/**
-	 * Default location of .coffee source files.
+	 * Default location of .fan source files.
 	 * 
 	 * @parameter expression="${basedir}/src/main/fan/"
 	 * @required
