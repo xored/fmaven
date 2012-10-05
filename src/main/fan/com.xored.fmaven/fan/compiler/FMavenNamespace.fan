@@ -17,7 +17,7 @@ class FMavenNamespace : CNamespace
     if(!locs.containsKey(podName)) return null
     loc := locs[podName]
     if(!loc.exists) return null
-    fpod := FPod(this, podName, addZip(Zip.open(loc)))
+    fpod := FPod(this, podName, Zip.open(loc))
     fpod.read
     return fpod
   }

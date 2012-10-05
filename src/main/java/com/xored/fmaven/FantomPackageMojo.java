@@ -11,8 +11,8 @@ public class FantomPackageMojo extends FatomMojo {
 
 	@Override
 	protected void doExecute() {
-		File destination = new File(fanOutputDir, String.format("%s-%s.pod",
-				project.getArtifactId(), project.getVersion()));
+		File destination = new File(fanOutputDir, String.format("%s.pod",
+				project.getArtifactId()));
 		project.getArtifact().setFile(destination);
 	}
 }

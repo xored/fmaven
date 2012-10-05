@@ -1,5 +1,9 @@
 package com.xored.fmaven.compiler;
 
+import static com.xored.fmaven.compiler.CompileStatus.ERROR;
+import static com.xored.fmaven.compiler.CompileStatus.SUCCESSFUL;
+import static com.xored.fmaven.utils.PathUtils.platformPath;
+
 import java.io.File;
 
 import com.google.common.base.Joiner;
@@ -7,37 +11,23 @@ import com.google.common.base.Joiner;
 import fan.fmaven.Compiler;
 import fan.fmaven.FanPod;
 import fan.sys.List;
+import fan.sys.Uri;
 
 public class FantomCompiler {
-	public static int ERROR = 0;
-	public static int SUCCESSFUL = 1;
-
-	public static class CompileStatus {
-
-		public final int code;
-		public final String msg;
-
-		public CompileStatus(int code) {
-			this(code, null);
-		}
-
-		private CompileStatus(int code, String msg) {
-			this.code = code;
-			this.msg = msg;
-		}
-	}
 
 	@SuppressWarnings("static-access")
-	public CompileStatus compile(FanPod pod, File fanOutputDir) {
+	public CompileStatus compile(FanPod pod, File fanOutputDir, File podRepo) {
 		if (!fanOutputDir.exists()) {
 			fanOutputDir.mkdirs();
 		}
 
-		// TODO: use normal path
-		String path = "file:/" + fanOutputDir.getPath().replaceAll("\\\\", "/");
-		Compiler compiler = new Compiler().make(path.endsWith("/") ? path
-				: path + "/");
-		List errors = compiler.compileManifest(pod);
+		Compiler compiler = new Compiler().make(
+				Uri.fromStr(platformPath(fanOutputDir, true)),
+				Uri.fromStr(platformPath(podRepo, true)));
+		compiler.pods.add(pod);
+
+		List errors = compiler.compilePods();
+		compiler.dispose();
 
 		if (errors.isEmpty()) {
 			return status(SUCCESSFUL);

@@ -75,7 +75,7 @@ class Compiler
     {
       pods.add(pod.basename, pod)
     }
-    namespace = FMavenNamespace(pods) 
+    namespace = FMavenNamespace(pods)
   }
   
   Void dispose()
