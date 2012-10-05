@@ -10,7 +10,8 @@ class FanPod
   Uri[] javaDirs := [,]
   Uri[] podSrc := [Uri("fan/")]
   
-  const Str:Str meta := [:]
+  Depend[] rawDepends := Depend[,]
+  Str:Str meta := [:]
   
   new make(Str name, Uri podDirPath) {
     podName = name
@@ -42,6 +43,15 @@ class FanPod
   }
   
   File baseDir() { podDir }
+  
+  FanPod depend(Str raw) {
+    try {
+      rawDepends.add(Depend.fromStr(raw))
+    } catch(ParseErr e) {
+      throw Err("Invalid dependency format $e.msg")
+    }
+    return this
+  }
   
   static new makeFromStr(Str name, Str podDirPathStr) { make(name, Uri.fromStr(podDirPathStr)) }
 }

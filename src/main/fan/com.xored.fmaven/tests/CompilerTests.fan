@@ -3,30 +3,35 @@
 ** 
 class CompilerTests : Test
 {
+  Uri? podDir := unzip(`/resources/tests/pods.zip`)
   
-  Void testHelloWorld()
+  Void testWorld()
   {
-    verifyNotNull(compile(unzip(`/resources/tests/hello.zip`)))
+    verifyNotNull(compile(FanPod("hello", unzip(`/resources/tests/hello.zip`)).depend("sys 1.0")))
   }
   
-  
-  File? compile(File dir) 
+  Void testDependentWorld()
   {
-     errors := Compiler(dir.uri) 
+    verifyNotNull(compile(FanPod("helloDep", unzip(`/resources/tests/helloDep.zip`)).depend("sys 1.0").depend("hello 1.0")))
+  }
+  
+  File? compile(FanPod pod) 
+  {
+    compiler := Compiler(pod.podDir.uri, podDir) 
     {
-      manifests = 
-      [
-        FanPod(dir.basename, dir.uri)
-      ]
-    }.compileManifests
+      pods = [ pod ]
+    }
+    errors := compiler.compilePods
+    compiler.dispose
     if (!errors.isEmpty) {
+      fail(errors.toStr)
       return null;
     }
-    podFile := dir.plus(Uri.fromStr(dir.basename + ".pod"));
+    podFile := pod.podDir.plus(Uri.fromStr(pod.podName + ".pod"));
     return podFile.exists ? podFile : null
   }
   
-  File unzip(Uri uri)
+  Uri unzip(Uri uri)
   {
     outDir := tempDir.createDir(uri.basename)
     zipFile := Zip.read(typeof.pod.file(uri).in)
@@ -39,6 +44,7 @@ class CompilerTests : Test
         file.copyTo(outDir.createFile(file.path.join("/")), ["overwrite":true])
       }
     }      
-    return outDir
+    outDir.deleteOnExit
+    return outDir.uri
   }
 }

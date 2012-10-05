@@ -2,34 +2,37 @@ using fcompiler
 
 class Compiler
 {
-  FanPod[] manifests := [,]
+  FMavenNamespace? namespace
+  
+  FanPod[] pods := [,]
  
   File outputDir { private set }
   
-  new make(Uri outDir) 
+  new make(Uri outDir, Uri podsLoc) 
   { 
     outputDir = File(outDir)
     if (!outputDir.exists) { outputDir.create }
+    prepareNamespace(podsLoc)
   }
   
-  static new makeFromStr(Str outDirStr) { make(Uri.fromStr(outDirStr)) }
+  static new makeFromStr(Str outDirStr, Str podsLoc) { make(Uri.fromStr(outDirStr), Uri.fromStr(podsLoc)) }
   
-  CompilerErr[] compileManifests() 
+  CompilerErr[] compilePods() 
   {
     CompilerErr[] caughtErrs := [,]
-    manifests.each { caughtErrs.addAll(compileManifest(it)) }
+    pods.each { caughtErrs.addAll(compilePod(it)) }
     return caughtErrs
   }
   
-  CompilerErr[] compileManifest(FanPod manifest) 
+  private CompilerErr[] compilePod(FanPod manifest) 
   {
     buf := StrBuf()
     input := CompilerInput.make
     input.log         = CompilerLog(buf.out)
     input.podName     = manifest.podName
     input.version     = manifest.podVersion
-//    input.ns          = F4Namespace(getAllPods(fp), fp.classpath, fp.javaProject)
-//    input.depends     = manifest.rawDepends.dup
+    input.ns          = namespace
+    input.depends     = manifest.rawDepends.dup
     input.includeDoc  = true
     input.summary     = manifest.podSummary
     input.mode        = CompilerInputMode.file
@@ -63,5 +66,20 @@ class Compiler
     catch(CompilerErr e) { echo(e); caughtErrs.add(e) } 
     catch(Err e) { echo(e); e.trace } //TODO: add logging 
     return [caughtErrs.addAll(compiler.errs), compiler.warns]
+  }
+  
+  private Void prepareNamespace(Uri podsDir)
+  { 
+    pods := [:]
+    File(podsDir).list.each |pod| 
+    {
+      pods.add(pod.basename, pod)
+    }
+    namespace = FMavenNamespace(pods) 
+  }
+  
+  Void dispose()
+  {
+    namespace.close
   }
 }
